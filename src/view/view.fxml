@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.collections.*?>
+<?import application.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="759.0" prefWidth="919.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Display Names">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Pane layoutX="300.0" layoutY="209.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <TableView fx:id="dgvEmployee" layoutX="7.0" layoutY="4.0" prefHeight="410.0" prefWidth="446.0">
+                                <columns>
+                                  <TableColumn fx:id="dgvEmployeeColName" editable="false" prefWidth="137.0" text="Name" />
+                                  <TableColumn fx:id="dgvEmployeeColRate" editable="false" prefWidth="113.0" text="Hourly Rate" />
+                                  <TableColumn fx:id="dgvEmployeeColRegHours" editable="false" prefWidth="93.0" text="Reg. Hours" />
+                                  <TableColumn fx:id="dgvEmployeeColOThours" editable="false" prefWidth="100.0" text="O/T Hours" />
+                                </columns>
+                              </TableView>
+                              <Button fx:id="btnImport" layoutX="514.0" layoutY="153.0" mnemonicParsing="false" onAction="#btnImport_Clicked" prefHeight="49.0" prefWidth="167.0" text="Import Employees" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Untitled Tab 2">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
