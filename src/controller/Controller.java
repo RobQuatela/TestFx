@@ -8,6 +8,8 @@ import com.opencsv.CSVReader;
 
 import application.Employee;
 import application.EmployeeTest;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,36 +17,57 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+
+import java.sql.*;
 
 
 public class Controller {
 
 	@FXML
-	TableView<Employee> dgvEmployee;
+	private TableView<Employee> dgvEmployee;
 	@FXML
-	TableColumn<Employee, String> dgvEmployeeColName;
+	private TableColumn<Employee, String> dgvEmployeeColName;
 	@FXML
-	TableColumn<Employee, Double> dgvEmployeeColRate;
+	private TableColumn<Employee, Double> dgvEmployeeColRate;
 	@FXML
-	TableColumn<Employee, Double> dgvEmployeeColRegHours;
+	private TableColumn<Employee, Double> dgvEmployeeColRegHours;
 	@FXML
-	TableColumn<Employee, Double> dgvEmployeeColOTHours;
+	private TableColumn<Employee, Double> dgvEmployeeColOThours;
 	@FXML
-	Button btnImport = new Button();
+	private Button btnImport = new Button();
+    @FXML
+    private TextField txtRate = new TextField();
+    @FXML
+    private TextField txtName = new TextField();
+    @FXML
+    private TextField txtOTHours = new TextField();
+    @FXML
+    private TextField txtRegHours = new TextField();
+    
+	
+    private ObservableList<Employee> employeeData = FXCollections.observableArrayList();
+	
+	static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	static String DB_URL = "jdbc:mysql://localhost:3306/dbTest?autoReconnect=true?useSSL=false";
+	static final String USER = "root";
+	static final String PASS = "P@ssG0!";
+	public static Connection conn = null;
 	
 	public void btnImport_Clicked(ActionEvent event) {
-		setValues(nonImports());
-		//System.out.println("test");
+		//setValues(nonImports());
+		setValues(imports());
+		//test(nonImports());
 	}
 	
 	public ObservableList<Employee> imports() {
-		ObservableList<Employee> list = FXCollections.observableArrayList();
 		String[] nextLine;
 		try {
 			CSVReader reader = new CSVReader(new FileReader("/home/rquatela/Desktop/test1.csv"));
 			while((nextLine = reader.readNext()) != null) {
-				list.add(new Employee(nextLine[0], Double.parseDouble(nextLine[1]), 
+				employeeData.add(new Employee(nextLine[0], Double.parseDouble(nextLine[1]), 
 						Double.parseDouble(nextLine[2]), Double.parseDouble(nextLine[3])));
 			}
 		}
@@ -55,24 +78,34 @@ public class Controller {
 			e.printStackTrace();
 		}
 		
-		return list;
+		return employeeData;
+	}
+/*	
+	public void test(ObservableList<EmployeeTest> emp) {
+		for(EmployeeTest e : emp)
+			System.out.println(e.getOtHours());
 	}
 	
 	public ObservableList<Employee> nonImports() {
-		ObservableList<Employee> list = 
-				FXCollections.observableArrayList(
-						new Employee("Rob Quatela", 7.25, 53, 13),
-						new Employee("Sarah Quatela", 15.00, 50, 10)
-						);
-		return list;
-	}
+		employeeData.add(new Employee("Rob Quatela", 7.25, 40, 0));
+		employeeData.add(new Employee("Sarah Quatela", 10, 50, 10));
+		return employeeData;
+	}*/
 	
 	public void setValues(ObservableList<Employee> imports) {
 		dgvEmployeeColName.setCellValueFactory(new PropertyValueFactory<Employee, String>("name"));
 		dgvEmployeeColRate.setCellValueFactory(new PropertyValueFactory<Employee, Double>("rate"));
 		dgvEmployeeColRegHours.setCellValueFactory(new PropertyValueFactory<Employee, Double>("regHours"));
-		dgvEmployeeColOTHours.setCellValueFactory(new PropertyValueFactory<Employee, Double>("otHours"));
+		dgvEmployeeColOThours.setCellValueFactory(new PropertyValueFactory<Employee, Double>("otHours"));
+		
 		dgvEmployee.setItems(imports);
+	}
+	
+	public void selectCell(MouseEvent event) {
+		txtName.setText(dgvEmployee.getSelectionModel().getSelectedItem().getName());
+		txtRate.setText(String.valueOf(dgvEmployee.getSelectionModel().getSelectedItem().getRate()));
+		txtRegHours.setText(String.valueOf(dgvEmployee.getSelectionModel().getSelectedItem().getRegHours()));
+		txtOTHours.setText(String.valueOf(dgvEmployee.getSelectionModel().getSelectedItem().getOtHours()));
 	}
 	
 }

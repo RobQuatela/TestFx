@@ -10,10 +10,10 @@ public class EmployeeTest {
 	private double otHours;
 	
 	public EmployeeTest(String name, double rate, double regHours, double otHours) {
-		setName(name);
-		setRate(rate);
-		setRegHours(regHours);
-		setOtHours(otHours);
+		this.name = name;
+		this.rate = rate;
+		this.regHours = regHours;
+		this.otHours = otHours;
 	}
 	
 	public String getName() {
