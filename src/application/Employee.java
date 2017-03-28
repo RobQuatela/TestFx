@@ -11,10 +11,10 @@ public class Employee {
 	private SimpleDoubleProperty otHours;
 	
 	public Employee(String name, double rate, double regHours, double otHours) {
-		setName(name);
-		setRate(rate);
-		setRegHours(regHours);
-		setOtHours(otHours);
+		this.name = new SimpleStringProperty(name);
+		this.rate = new SimpleDoubleProperty(rate);
+		this.regHours = new SimpleDoubleProperty(regHours);
+		this.otHours = new SimpleDoubleProperty(otHours);
 	}
 	
 	public String getName() {
